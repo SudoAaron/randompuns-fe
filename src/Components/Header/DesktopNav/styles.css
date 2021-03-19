@@ -1,0 +1,31 @@
+.nav__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+  }
+  
+  .nav__logo {
+    margin: 10px;
+  }
+  
+  .nav__list {
+    display: flex;
+    list-style: none;
+    margin: 0 10px;
+  }
+  
+  .nav__list__item {
+    padding: 10px;
+  }
+  
+  .nav__list__link,
+  .nav__list__link:visited,
+  .nav__list__link:active {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .nav__list__link:hover {
+    text-decoration: underline;
+  }
