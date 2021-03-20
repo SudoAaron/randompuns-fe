@@ -28,3 +28,8 @@
 .pun-error {
     font-size: 1.5rem;
 }
+
+.refresh-link {
+    font-size: 1.25rem;
+    text-decoration: underline;
+}

@@ -24,3 +24,7 @@
   background-color: #4CAF50;
   color: white;
 }
+
+.approved-link {
+  text-decoration: underline;
+}

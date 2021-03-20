@@ -19,7 +19,8 @@ function Admin() {
                         <th>Author</th>
                         <th>Date Created</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <th>Approve</th>
+                        <th>Delete</th>
                     </tr>
                     {
                         puns.map((pun) => {
@@ -31,7 +32,8 @@ function Admin() {
                                     <td>{pun.author}</td>
                                     <td>{pun.createdAt}</td>
                                     <td>{pun.approved ? 'Approved' : 'Not Approved'}</td>
-                                    <td><span onClick={() => {actions.approvePun(pun._id)}}>Approve</span> / <span onClick={() => {actions.deletePun(pun._id)}}>Delete</span></td>
+                                    <td><span className="approved-link" onClick={() => {actions.approvePun(pun._id)}}>Approve</span></td>
+                                    <td><span className="approved-link" onClick={() => {actions.deletePun(pun._id)}}>Delete</span></td>
                                 </tr>
                             )
                         })

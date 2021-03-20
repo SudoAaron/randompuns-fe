@@ -25,6 +25,7 @@ function PunDisplay() {
         <p className="pun-punchline reveal-button" onClick={handleReveal}>Click to Reveal</p>
       }
       <p className="pun-author">Author: {randomPun.author}</p>
+      <p className="refresh-link" onClick={() => {window.location.reload()}}>Refresh Page</p>
     </div>
     :
     <div className="pun-wrapper">
