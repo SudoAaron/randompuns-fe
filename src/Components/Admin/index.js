@@ -3,10 +3,10 @@ import { StateContext } from '../../Context';
 import './styles.css';
 
 function Admin() {
-    const { puns, actions} = useContext(StateContext);
+    const { puns, actions } = useContext(StateContext);
     useEffect(() => {
         actions.getPuns();
-    },[])
+    },[]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="admin-wrapper">

@@ -11,7 +11,7 @@ function PunDisplay() {
   const { randomPun, actions } = useContext(StateContext);
   useEffect(() => {
     actions.getRandomPun();
-  },[])
+  },[]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     randomPun ?
