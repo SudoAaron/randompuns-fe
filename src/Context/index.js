@@ -41,9 +41,7 @@ export const Provider = (props) => {
           })
         };
         
-        fetch(url, options)
-          .then(response => {
-          });
+        fetch(url, options);
     }
 
     const handleApprovePun = (punID) => {
