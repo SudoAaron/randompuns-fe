@@ -7,8 +7,12 @@ export const navLinks = [
         "title": "Submit a Pun",
         "url": "/submit"
     },
+    // {
+    //     "title": "Contact",
+    //     "url": "/contact"
+    // },
     {
-        "title": "Contact",
-        "url": "/contact"
+        "title": "Admin",
+        "url": "/admin"
     }
 ];

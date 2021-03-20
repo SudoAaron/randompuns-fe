@@ -3,38 +3,84 @@ import React, { useState } from 'react';
 export const StateContext = React.createContext();
 
 export const Provider = (props) => {
-    const [puns, setPuns] = useState([
-        {
-            "id": 1,
-            "title": "Knock-Knock Joke",
-            "setUp": "knock-knock, who's there? Orange. Orange who?",
-            "punchline": "orangea glad I didn't say banana",
-            "author": "Aaron Williams",
-            "submissionDate": "2021-03-18",
-            "approved": false
-        },
-        {
-            "id": 2,
-            "title": "Chicken Farmer",
-            "setUp": "What do you call someone who takes care of chickens?",
-            "punchline": "A chicken tender!",
-            "author": "Don Potbury",
-            "submissionDate": "2021-03-18",
-            "approved": true
-        }
-    ]);
+    const [title] = useState('Random Puns');
 
-    const handleSetPuns = (pun) => {
-        setPuns(prevPuns => {
-            return(prevPuns.concat(pun));
-        })
+    const [randomPun, setRandomPun] = useState(null);
+    const handleSetRandomPun = () => {
+        const url = 'https://randompuns-api.herokuapp.com/puns/random';
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setRandomPun(data);
+        });
+    }
+
+    const [puns, setPuns] = useState([]);
+    const handleSetPuns = () => {
+        const url = 'https://randompuns-api.herokuapp.com/puns';
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setPuns(data);
+        });
+    }
+
+    const handleSubmitPun = (content) => {
+        const url = 'https://randompuns-api.herokuapp.com/puns/submit';
+        const options = {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8'
+          },
+          body: JSON.stringify({
+            title: content.title,
+            setUp: content.setUp,
+            punchline: content.punchline,
+            author: content.author
+          })
+        };
+        
+        fetch(url, options)
+          .then(response => {
+          });
+    }
+
+    const handleApprovePun = (punID) => {
+        const url = `https://randompuns-api.herokuapp.com/puns/${punID}/approve`;
+        const options = {
+          method: 'PATCH',
+        };
+        
+        fetch(url, options)
+          .then(response => {
+              handleSetPuns();
+          });
+    }
+
+    const handleDeletePun = (punID) => {
+        const url = `https://randompuns-api.herokuapp.com/puns/${punID}`;
+        const options = {
+          method: 'DELETE'
+        };
+        
+        fetch(url, options)
+          .then(response => {
+              handleSetPuns();
+          });
     }
 
     return (
         <StateContext.Provider value={{
+            title,
             puns,
+            randomPun,
             actions: {
-                setPuns: handleSetPuns
+                getRandomPun: handleSetRandomPun,
+                getPuns: handleSetPuns,
+                submitPun: handleSubmitPun,
+                approvePun: handleApprovePun,
+                deletePun: handleDeletePun
             }
         }}>
             { props.children }
