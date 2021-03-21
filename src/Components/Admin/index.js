@@ -16,7 +16,7 @@ function Admin() {
                         <th>Title</th>
                         <th>Set-Up</th>
                         <th>Punchline</th>
-                        <th>Author</th>
+                        <th>Submitted By</th>
                         <th>Date Created</th>
                         <th>Status</th>
                         <th>Approve</th>
@@ -29,7 +29,7 @@ function Admin() {
                                     <td>{pun.title}</td>
                                     <td>{pun.setUp}</td>
                                     <td>{pun.punchline}</td>
-                                    <td>{pun.author}</td>
+                                    <td>{pun.submittedBy}</td>
                                     <td>{pun.createdAt}</td>
                                     <td>{pun.approved ? 'Approved' : 'Not Approved'}</td>
                                     <td><span className="approved-link" onClick={() => {actions.approvePun(pun._id)}}>Approve</span></td>

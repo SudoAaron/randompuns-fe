@@ -37,7 +37,7 @@ export const Provider = (props) => {
             title: content.title,
             setUp: content.setUp,
             punchline: content.punchline,
-            author: content.author
+            submittedBy: content.submittedBy
           })
         };
         

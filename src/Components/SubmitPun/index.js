@@ -12,7 +12,7 @@ function SubmitPun() {
             "title": e.target.title.value,
             "setUp": e.target.setUp.value,
             "punchline": e.target.punchline.value,
-            "author": e.target.author.value
+            "submittedBy": e.target.submittedBy.value
         }
         actions.submitPun(punSubmission);
         history.push('/');
@@ -23,7 +23,7 @@ function SubmitPun() {
                 <input type="text" name="title" placeholder="Joke Title"/>
                 <input type="text" name="setUp" placeholder="Joke Set Up"/>
                 <input type="text" name="punchline" placeholder="Joke Punchline"/>
-                <input type="text" name="author" placeholder="Author Name"/>
+                <input type="text" name="submittedBy" placeholder="Submitted By Name"/>
                 <input type="submit" className="submit-pun__button" value="submit"></input>
             </form>
         </div>
