@@ -41,6 +41,10 @@
       transition: transform 0.2s ease;
       z-index: 1;
   }
+
+  .navbar--mobile ul {
+    padding: 0;
+  }
   
   .show-nav--mobile {
       transform: translate(0);
