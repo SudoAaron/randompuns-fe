@@ -5,7 +5,6 @@ import './styles.css';
 
 function LikeBar (props) {
     const { randomPun, actions } = useContext(StateContext);
-    const [punID, setPunID] = useState(0);
     const [likedStatus, setLikedStatus] = useState('first');
 
     useEffect(() => {
@@ -24,7 +23,6 @@ function LikeBar (props) {
             async function getPun() {
             await actions.setRandomPun(punID)
             .then(() => {
-                setPunID(punID);
                 setLikedStatus(status);
             })
             }

@@ -19,6 +19,8 @@ function Admin() {
                         <th>Submitted By</th>
                         <th>Date Created</th>
                         <th>Status</th>
+                        <th>Likes</th>
+                        <th>Dislikes</th>
                         <th>Approve</th>
                         <th>Delete</th>
                     </tr>
@@ -32,6 +34,8 @@ function Admin() {
                                     <td>{pun.submittedBy}</td>
                                     <td>{pun.createdAt}</td>
                                     <td>{pun.approved ? 'Approved' : 'Not Approved'}</td>
+                                    <td>{pun.likes}</td>
+                                    <td>{pun.dislikes}</td>
                                     <td><span className="approved-link" onClick={() => {actions.approvePun(pun._id)}}>Approve</span></td>
                                     <td><span className="approved-link" onClick={() => {actions.deletePun(pun._id)}}>Delete</span></td>
                                 </tr>
