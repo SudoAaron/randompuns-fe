@@ -6,9 +6,18 @@ export const Provider = (props) => {
     const [title] = useState('Random Puns');
 
     const [randomPun, setRandomPun] = useState(null);
-    const handleSetRandomPun = () => {
+    const handleGetRandomPun = async () => {
         const url = 'https://randompuns-api.herokuapp.com/puns/random';
-        fetch(url)
+        await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setRandomPun(data);
+        });
+    }
+
+    const handleSetRandomPun = async (punID) => {
+        const url = `https://randompuns-api.herokuapp.com/puns/${punID}`;
+        await fetch(url)
         .then(response => response.json())
         .then(data => {
             setRandomPun(data);
@@ -16,16 +25,16 @@ export const Provider = (props) => {
     }
 
     const [puns, setPuns] = useState([]);
-    const handleSetPuns = () => {
+    const handleSetPuns = async () => {
         const url = 'https://randompuns-api.herokuapp.com/puns';
-        fetch(url)
+        await fetch(url)
         .then(response => response.json())
         .then(data => {
             setPuns(data);
         });
     }
 
-    const handleSubmitPun = (content) => {
+    const handleSubmitPun = async (content) => {
         const url = 'https://randompuns-api.herokuapp.com/puns/submit';
         const options = {
           method: 'POST',
@@ -41,28 +50,56 @@ export const Provider = (props) => {
           })
         };
         
-        fetch(url, options);
+        await fetch(url, options);
     }
 
-    const handleApprovePun = (punID) => {
+    const handleApprovePun = async (punID) => {
         const url = `https://randompuns-api.herokuapp.com/puns/${punID}/approve`;
         const options = {
           method: 'PATCH',
         };
         
-        fetch(url, options)
+        await fetch(url, options)
           .then(response => {
               handleSetPuns();
           });
     }
 
-    const handleDeletePun = (punID) => {
+    const [pun, setPun] = useState(null);
+    const handleGetPunByID = async (punID) => {
+        const url = `https://randompuns-api.herokuapp.com/puns/${punID}`;
+        await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setPun(data);
+        });
+    }
+
+    const handleLikePun = async (punID) => {
+        const url = `https://randompuns-api.herokuapp.com/puns/${punID}/like`;
+        const options = {
+          method: 'PATCH',
+        };
+        
+        await fetch(url, options)
+    }
+
+    const handleDislikePun = async (punID) => {
+        const url = `https://randompuns-api.herokuapp.com/puns/${punID}/dislike`;
+        const options = {
+          method: 'PATCH',
+        };
+        
+        await fetch(url, options)
+    }
+
+    const handleDeletePun = async (punID) => {
         const url = `https://randompuns-api.herokuapp.com/puns/${punID}`;
         const options = {
           method: 'DELETE'
         };
         
-        fetch(url, options)
+        await fetch(url, options)
           .then(response => {
               handleSetPuns();
           });
@@ -72,13 +109,18 @@ export const Provider = (props) => {
         <StateContext.Provider value={{
             title,
             puns,
+            pun,
             randomPun,
             actions: {
-                getRandomPun: handleSetRandomPun,
+                getRandomPun: handleGetRandomPun,
+                setRandomPun: handleSetRandomPun,
                 getPuns: handleSetPuns,
                 submitPun: handleSubmitPun,
                 approvePun: handleApprovePun,
-                deletePun: handleDeletePun
+                deletePun: handleDeletePun,
+                likePun: handleLikePun,
+                dislikePun: handleDislikePun,
+                getPunByID: handleGetPunByID
             }
         }}>
             { props.children }

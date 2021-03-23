@@ -1,22 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StateContext } from '../../Context';
+import LikeBar from '../LikeBar';
 import './styles.css';
 
 function PunDisplay() {
+  const { randomPun, actions } = useContext(StateContext);
+
+
+  useEffect(() => {
+    actions.getRandomPun();
+    },[]) // eslint-disable-line react-hooks/exhaustive-deps
+
+
   const [reveal, setReveal] = useState(false);
   const handleReveal = () => {
     setReveal(prevState => !prevState);
   }
 
-  const { randomPun, actions } = useContext(StateContext);
-  useEffect(() => {
-    actions.getRandomPun();
-  },[]) // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
     randomPun ?
     <div className="pun-wrapper">
-      <h2 className="pun-title">{randomPun.title}</h2>
+      <div className="pun-header">
+        <LikeBar pun={randomPun} />
+        <h2 className="pun-title">{randomPun.title}</h2>
+      </div>
       <p className="pun-setup">{randomPun.setUp}</p>
       {
         reveal ? 
@@ -29,7 +36,9 @@ function PunDisplay() {
     </div>
     :
     <div className="pun-wrapper">
-      <p className="pun-error">No Puns Currently Available</p>
+      <i className="fas fa-circle-notch fa-spin pun-loader"></i>
+      <p className="pun-error">Loading..</p>
+
     </div>
   )
 }
