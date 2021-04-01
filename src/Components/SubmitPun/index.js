@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
-import { StateContext } from '../../Context';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
+import randomPuns from '../../apis/randomPuns';
 import './styles.css';
 
 function SubmitPun() {
     let history = useHistory();
-    const {actions} = useContext(StateContext);
     const handleSubmit = (e) => {
         e.preventDefault();
         const punSubmission = {
@@ -14,8 +13,10 @@ function SubmitPun() {
             "punchline": e.target.punchline.value,
             "submittedBy": e.target.submittedBy.value
         }
-        actions.submitPun(punSubmission);
-        history.push('/');
+        randomPuns.post('/puns/submit', punSubmission)
+        .then(res => {
+            history.push('/');
+        })
     }
     return (
         <div className="submit-pun__wrapper">

@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { navLinks } from '../NavLinks';
-import { StateContext } from '../../../Context';
 import './styles.css';
 
 function MobileNav() {
-    const { title } = useContext(StateContext);
 
     const [clicked, setClicked] = useState(false);
 
@@ -35,7 +33,7 @@ function MobileNav() {
 
     return(
         <div>
-            <div className="nav__logo"><Link to="/">{title}</Link></div>
+            <div className="nav__logo"><Link to="/">RandomPuns</Link></div>
             <i className={`fa icon--mobile ${showIcon(clicked)}`} onClick={handleClick}></i>
             <nav className={`navbar--mobile ${showLinks(clicked)}`}>
                 <ul>
