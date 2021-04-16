@@ -1,5 +1,5 @@
 .admin-wrapper {
-  margin-top: 25px;
+  margin-top: 10px;
 }
 
 .admin-table {
@@ -27,4 +27,21 @@
 
 .approved-link {
   text-decoration: underline;
+  cursor: pointer;
+}
+
+.mass-update-wrapper form {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.mass-update-wrapper form input {
+  padding: 2px;
+  margin: 0 3px;
+}
+
+.mass-update-wrapper form select {
+  padding: 2.5px;
 }

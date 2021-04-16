@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPuns } from '../../actions';
-import randomPuns from '../../apis/randomPuns';
-import UserNav from '../Header/UserNav';
+import { fetchPuns } from '../../../actions';
+import randomPuns from '../../../apis/randomPuns';
+import AdminNav from '../../Header/AdminNav';
 import './styles.css';
 
 class AdminPanel extends React.Component {
@@ -21,6 +21,16 @@ class AdminPanel extends React.Component {
                 this.props.fetchPuns();
             })
         }
+        const bulkApprovePuns = async (punsArr, token) => {
+            await randomPuns.patch(`/puns/approve/bulk`,
+            {},
+            {
+                data: punsArr ,
+                headers: { Authorization: `Bearer ${token}` }
+            }).then(() => {
+                this.props.fetchPuns();
+            })
+        }
         const deletePun = async (id, token) => {
             await randomPuns.delete(`/puns/${id}`,
             {
@@ -30,13 +40,51 @@ class AdminPanel extends React.Component {
             })
         }
 
+        const checkAllBoxes = () => {
+            const formRows = [...document.getElementById('puns-form-body').childNodes];
+            const checkAllBoxStatus = document.getElementById('check-all-box').checked;
+            formRows.forEach((row, index) => {
+                if (index !== 0) {
+                    row.getElementsByTagName("td")[0].getElementsByTagName("input")[0].checked = checkAllBoxStatus;
+                }
+            })
+        }
+
+        const submitAllUpdates = (e) => {
+            e.preventDefault();
+            const formRows = [...document.getElementById('puns-form-body').childNodes];
+            let rowsToUpdate = [];
+            formRows.forEach((row, index) => {
+                if (index !== 0) {
+                    const boxStatus = row.getElementsByTagName("td")[0].getElementsByTagName("input")[0].checked;
+                    if(boxStatus) {
+                        const boxID = row.getElementsByTagName("td")[0].getElementsByTagName("input")[0].id;
+                        rowsToUpdate.push(boxID);
+                    }
+                }
+            })
+            console.log(rowsToUpdate);
+            bulkApprovePuns(rowsToUpdate, this.props.cookies.get('token'))
+            // Bulk Approve/Delete
+        }
+
         return (
             <div>
-                <UserNav cookies={this.props.cookies}/>
+                <AdminNav cookies={this.props.cookies}/>
+                <div className="mass-update-wrapper">
+                    <form onSubmit={submitAllUpdates}>
+                        <select name="updateOption" defaultValue="approve">
+                            <option value="approve">Approve</option>
+                            <option value="delete">Delete</option>
+                        </select>
+                        <input type="submit" value="submit" />
+                    </form>
+                </div>
                 <div className="admin-wrapper">
                     <table className="admin-table">
-                        <tbody>
+                        <tbody id="puns-form-body" >
                             <tr>
+                                <th><input id="check-all-box" type="checkbox" onChange={checkAllBoxes}/></th>
                                 <th>Title</th>
                                 <th>Set-Up</th>
                                 <th>Punchline</th>
@@ -52,6 +100,7 @@ class AdminPanel extends React.Component {
                                 this.props.puns.map((pun) => {
                                     return (
                                         <tr key={pun._id}>
+                                            <td><input id={pun._id} type="checkbox" /></td>
                                             <td>{pun.title}</td>
                                             <td>{pun.setUp}</td>
                                             <td>{pun.punchline}</td>

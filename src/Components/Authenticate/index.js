@@ -4,19 +4,28 @@ import Login from '../Login';
 
 class Authenticate extends React.Component {
 
-    render(){
+    render(props){
         const isAuthenticated = (props) => {
             if (props.cookies.get('token') !== undefined) {
                 return true;
             }
             return false;
         }
-        if(isAuthenticated(this.props)) {
+        const isPermitted = (props) => {
+            if (!props.cookies.get('roles')) return null
+            if (props.cookies.get('roles').includes(props.role)) {
+                return true;
+            }
+            return false;
+        }
+        if(isAuthenticated(this.props) && isPermitted(this.props)) {
             return (
                 <div>
                     {this.props.children}
                 </div>
             )
+        } else if (isAuthenticated(this.props) && !isPermitted(this.props)){
+            return (<div>Insufficient Permissions</div>)
         } else {
             return (
                 <Login />

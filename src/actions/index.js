@@ -5,7 +5,7 @@ const setCookie = (cname, cvalue, exdays) => {
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     var expires = "expires=" + d.toUTCString();
     // document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;Secure;HttpOnly;SameSite=Lax;";
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/; Secure; SameSite=Lax;";
 }
 
 const deleteCookie = (cname) => {
@@ -28,13 +28,25 @@ export const loginUser = (email, password) => async (dispatch) => {
         password
     }));
     setCookie('token', response.data.token, 1);
+    setCookie('roles', response.data.user.roles, 1);
     dispatch({ type: 'LOGIN_USER', payload: { email: '', token: response.data.token }});
 }
 
 export const logoutUser = (token) => async (dispatch) => {
+    deleteCookie('token');
+    deleteCookie('roles');
     await (randomPuns.post('/users/logout',{}, {
         headers: { Authorization: `Bearer ${token}` }
     }));
-    deleteCookie('token');
     dispatch({ type: 'LOGOUT_USER', payload: "" });
+}
+
+export const fetchUsers = (token) => async (dispatch) => {
+    await (randomPuns.get('/users',{
+        headers: { Authorization: `Bearer ${token}` }
+    })).then((response) => {
+        dispatch({ type: 'FETCH_USERS', payload: response.data });
+    }).catch((e) => {
+        // console.log(e);
+    })
 }
