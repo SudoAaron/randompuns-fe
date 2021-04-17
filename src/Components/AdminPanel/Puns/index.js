@@ -23,10 +23,26 @@ class AdminPanel extends React.Component {
         }
         const bulkApprovePuns = async (punsArr, token) => {
             await randomPuns.patch(`/puns/approve/bulk`,
-            {},
             {
-                data: punsArr ,
-                headers: { Authorization: `Bearer ${token}` }
+                items: punsArr
+            },
+            {
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }).then(() => {
+                this.props.fetchPuns();
+            })
+        }
+        const bulkDeletePuns = async (punsArr, token) => {
+            await randomPuns.delete(`/puns/delete/bulk`,
+            {
+                data: { items: punsArr },
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
             }).then(() => {
                 this.props.fetchPuns();
             })
@@ -50,7 +66,7 @@ class AdminPanel extends React.Component {
             })
         }
 
-        const submitAllUpdates = (e) => {
+        const submitAllUpdates = async (e) => {
             e.preventDefault();
             const formRows = [...document.getElementById('puns-form-body').childNodes];
             let rowsToUpdate = [];
@@ -63,9 +79,22 @@ class AdminPanel extends React.Component {
                     }
                 }
             })
-            console.log(rowsToUpdate);
-            bulkApprovePuns(rowsToUpdate, this.props.cookies.get('token'))
-            // Bulk Approve/Delete
+            switch (e.target.updateOption.value){
+                case 'approve':
+                    await bulkApprovePuns(rowsToUpdate, this.props.cookies.get('token'))
+                    .then(() => {
+                        this.props.fetchPuns();
+                    })
+                    break;
+                case 'delete':
+                    await bulkDeletePuns(rowsToUpdate, this.props.cookies.get('token'))
+                    .then(() => {
+                        this.props.fetchPuns();
+                    })
+                    break;
+                default:
+                    break;
+            }
         }
 
         return (
