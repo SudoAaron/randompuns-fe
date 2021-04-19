@@ -97,6 +97,26 @@ class AdminPanel extends React.Component {
             }
         }
 
+        const editField = async (e, originalValue, id) => {
+            const fieldName = e.target.name;
+            const fieldUpdateData = {};
+            const newValue = e.target.value;
+            fieldUpdateData[fieldName] = newValue
+            console.log(id);
+            if (newValue !== originalValue) {
+                await randomPuns.patch(`/puns/${id}`,
+                fieldUpdateData,
+                {
+                    headers: { 
+                        'Authorization': `Bearer ` + this.props.cookies.get('token'),
+                        'Content-Type': 'application/json'
+                    }
+                }).then(() => {
+                    this.props.fetchPuns();
+                })
+            }
+        }
+
         return (
             <div>
                 <AdminNav cookies={this.props.cookies}/>
@@ -130,10 +150,10 @@ class AdminPanel extends React.Component {
                                     return (
                                         <tr key={pun._id}>
                                             <td><input id={pun._id} type="checkbox" /></td>
-                                            <td>{pun.title}</td>
-                                            <td>{pun.setUp}</td>
-                                            <td>{pun.punchline}</td>
-                                            <td>{pun.submittedBy}</td>
+                                            <td><input type="text" name="title" defaultValue={pun.title} onBlur={(e) => {editField(e,pun.title, pun._id)}}/></td>
+                                            <td><input type="text" name="setUp" defaultValue={pun.setUp} onBlur={(e) => {editField(e,pun.setUp, pun._id)}}/></td>
+                                            <td><input type="text" name="punchline" defaultValue={pun.punchline} onBlur={(e) => {editField(e,pun.punchline, pun._id)}}/></td>
+                                            <td><input type="text" name="submittedBy" defaultValue={pun.submittedBy} onBlur={(e) => {editField(e,pun.submittedBy, pun._id)}}/></td>
                                             <td>{pun.createdAt}</td>
                                             <td>{pun.approved ? 'Approved' : 'Not Approved'}</td>
                                             <td>{pun.likes}</td>
