@@ -20,12 +20,13 @@ function SubmitPun() {
     }
     return (
         <div className="submit-pun__wrapper">
+            <h2>Submit a Pun</h2>
             <form onSubmit={handleSubmit} className="submit-pun__form">
-                <input type="text" name="title" placeholder="Joke Title"/>
-                <input type="text" name="setUp" placeholder="Joke Set Up"/>
-                <input type="text" name="punchline" placeholder="Joke Punchline"/>
-                <input type="text" name="submittedBy" placeholder="Submitted By Name"/>
-                <input type="submit" className="submit-pun__button" value="submit"></input>
+                <input type="text" name="title" placeholder="Pun Title"/>
+                <input type="text" name="setUp" placeholder="Pun Set Up"/>
+                <input type="text" name="punchline" placeholder="Pun Punchline"/>
+                <input type="text" name="submittedBy" placeholder="Submitted By: Name"/>
+                <input type="submit" className="submit-pun__button" value="Submit"></input>
             </form>
         </div>
     )

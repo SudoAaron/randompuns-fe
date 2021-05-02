@@ -33,7 +33,6 @@ class PunDisplay extends React.Component {
       <div className="pun-wrapper">
         <div className="pun-header">
           <LikeBar pun={this.props.randomPun} />
-          <h2 className="pun-title">{this.props.randomPun.title}</h2>
         </div>
         <p className="pun-setup">{this.props.randomPun.setUp}</p>
         {
@@ -42,8 +41,9 @@ class PunDisplay extends React.Component {
           :
           <p className="pun-punchline reveal-button" onClick={this.handleReveal}>Click to Reveal</p>
         }
+        <p className="pun-title">Title: {this.props.randomPun.title}</p>
         <p className="pun-submittedBy">Submitted By: {this.props.randomPun.submittedBy}</p>
-        <p className="refresh-link" onClick={() => {window.location.reload()}}>Refresh Page</p>
+        <p className="refresh-link" onClick={() => {window.location.reload()}}>Reload Pun</p>
       </div>
       :
       <div className="pun-wrapper">
