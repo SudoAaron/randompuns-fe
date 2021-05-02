@@ -43,7 +43,7 @@ class PunDisplay extends React.Component {
         }
         <p className="pun-title">Title: {this.props.randomPun.title}</p>
         <p className="pun-submittedBy">Submitted By: {this.props.randomPun.submittedBy}</p>
-        <p className="refresh-link" onClick={() => {window.location.reload()}}>Reload Pun</p>
+        <p className="refresh-link" onClick={() => {window.location.reload()}}>Load New Pun</p>
       </div>
       :
       <div className="pun-wrapper">
