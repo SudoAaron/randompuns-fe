@@ -26,16 +26,15 @@
 }
 
 .pun-title {
-    font-size: 3.5rem;
     font-style: italic;
 }
 
-.pun-setup, .pun-punchline {
-    font-size: 3rem;
+.pun-setup {
+    margin: 15px auto;
 }
 
-.pun-setup {
-
+.pun-setup, .pun-punchline {
+    font-size: 2rem;
 }
 
 .pun-punchline {
@@ -47,7 +46,7 @@
     display: inline-block;
     margin: 0;
     padding: 14px 28px;
-    font-size: 3rem;
+    font-size: 2rem;
     cursor: pointer;
     background-color:rgba(255, 0, 0, 0.8);
     color: white;
@@ -86,4 +85,12 @@
         margin: 50px auto;
         max-width: 60%;
     }
+    .pun-setup, .pun-punchline {
+        font-size: 3rem;
+    }
+    .reveal-button,
+    .pun-punchline {
+        font-size: 3rem;
+    }
+
   }
